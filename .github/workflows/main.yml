@@ -1,0 +1,22 @@
+name: send_concertcloud_notifications
+
+on:
+  schedule:
+    - cron: "0 2 * * 0"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  send-notifications:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: notification-env
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send notifications
+        run: ./send-notifications.sh
+        env:
+          USER: ${{ secrets.USER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
